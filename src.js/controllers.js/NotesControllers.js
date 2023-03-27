@@ -4,12 +4,14 @@ const knex = require("../database/knex")
 class NotesController {
 
     async create(request, response) {
-
+        console.info("começando processo de criação de nota")
         const { title, description, tags, links } = request.body;
         const user_id = request.user.id; // por conta de /ensureAuthentication, agora, dentro de request, existe user.id, que já será o token do usuário
 
 
         //NOTES        
+        console.info(`inserindo informações ${title} ${ description} ${user_id} na tabela note`)
+
         const note_id = await knex("notes").insert({
             title,
             description,
@@ -17,16 +19,21 @@ class NotesController {
             //inserindo body do request na tabela "notes" com knex
         })
 
+        
         //LINKS
+        
         const linksInsert = links.map(link => {
             return {
                 note_id,
                 url: link
             }
+            
             //criando objeto para inserir na tabela"links"
         })
-
-        await knex("links").insert(linksInsert); //inserindo o objeto na tabela "links"
+       
+        await knex("links").insert(linksInsert);
+        
+        console.info(`inserindo o objeto na tabela links ${linksInsert.toString()}`)
 
 
         //TAGS      
@@ -38,9 +45,12 @@ class NotesController {
             }
             //criando objeto para inserir na tabela"links"
         })
-
+        
+        console.info(`inserindo o objeto na tabela links ${tagsInsert.toString()}`)
         await knex("tags").insert(tagsInsert); //inserindo o objeto na tabela "links"
 
+        console.info("finalizando processo de criaçao de nota")
+        
         response.json();
     }
 
