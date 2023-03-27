@@ -10,6 +10,7 @@ class NotesController {
 
 
         //NOTES        
+        
         console.info(`inserindo informações ${title} ${ description} ${user_id} na tabela note`)
 
         const note_id = await knex("notes").insert({
@@ -19,9 +20,12 @@ class NotesController {
             //inserindo body do request na tabela "notes" com knex
         })
 
+        console.log( `insert note_id = ${note_id} feito com sucesso.`)
+
         
         //LINKS
         
+       
         const linksInsert = links.map(link => {
             return {
                 note_id,
@@ -30,11 +34,10 @@ class NotesController {
             
             //criando objeto para inserir na tabela"links"
         })
-       
-        await knex("links").insert(linksInsert);
         
         console.info(`inserindo o objeto na tabela links ${linksInsert.toString()}`)
-
+        await knex("links").insert(linksInsert);
+        console.log(`${linksInsert} inserido com sucesso`)
 
         //TAGS      
         const tagsInsert = tags.map(name => {
@@ -52,6 +55,7 @@ class NotesController {
         console.info("finalizando processo de criaçao de nota")
         
         response.json();
+        console.log("deu bom")
     }
 
     async show(request, response) {
