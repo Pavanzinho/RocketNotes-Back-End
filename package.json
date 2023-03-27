@@ -6,7 +6,7 @@
   "scripts": {
     "start": "pm2-runtime start ecosystem.config.js --env production",
     "dev": "nodemon ./src.js/server.js",
-    "migrate": "knex migrate:latest"
+    "migrate": "npx knex migrate:latest"
   },
   "author": "Thiago Pavan",
   "license": "ISC",
