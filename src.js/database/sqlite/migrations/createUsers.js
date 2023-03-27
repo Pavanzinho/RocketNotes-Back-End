@@ -10,7 +10,5 @@ const createUser= `
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status VARCHAR
     )
-
 `
-
   module.exports=createUser;
