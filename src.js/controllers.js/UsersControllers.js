@@ -36,7 +36,11 @@ class UserController {
     async update(request, response) {
 
         const { name, email, newPassword, oldPassword } = request.body;
-        console.log(request.body)
+
+        if (!newPassword && !oldPassword) {
+            throw new AppError("Nos informe a senha antiga e nova")
+            //obs: password e oldPassword vão ser as senhas que o usuário irá digitar na att.
+        }
 
 
         const user_id = request.user.id // existe user dentro da request, por meio do midleware que manipula o token:ensureAuthentication, linha 19
